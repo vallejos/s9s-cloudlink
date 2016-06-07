@@ -29,7 +29,10 @@ app.requireFolder = (requirePath) => {
     filesystem
         .listDirectory(requirePath)
         .forEach((file) => {
-            require(path.join(requirePath, file))(app, CloudLink);
+            try {
+                require(path.join(requirePath, file))(app, CloudLink);
+            } catch (e) {
+            }
         });
     return app;
 };

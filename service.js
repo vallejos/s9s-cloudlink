@@ -17,6 +17,11 @@ app.require('config');
 app.requireFolder('controllers');
 
 /**
+ * Load error controllers
+ */
+app.requireFolder('controllers/errors');
+
+/**
  * Start listening (use env.PORT or 3000 as default)
  */
 app.listen(process.env.PORT || 3000);
