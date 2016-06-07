@@ -1,0 +1,15 @@
+# Common
+.DS_Store
+
+# IDE
+.idea
+
+# NPM
+node_modules
+npm-debug.log
+
+# Work in progress files
+wip
+
+# Tests Coverage
+coverage

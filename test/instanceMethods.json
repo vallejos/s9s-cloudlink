@@ -1,0 +1,11 @@
+[
+  "getId",
+  "getName",
+  "getMemory",
+  "getCpu",
+  "getDiskSpace",
+  "getPublicIps",
+  "getPrivateIps",
+  "getRegion",
+  "getStatus"
+]

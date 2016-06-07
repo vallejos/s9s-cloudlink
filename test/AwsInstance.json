@@ -1,0 +1,55 @@
+{
+  "InstanceId": "i-cb782641",
+  "ImageId": "ami-a78603d4",
+  "State": {
+    "Code": 16,
+    "Name": "running"
+  },
+  "PrivateDnsName": "private_dns.eu-west-1.compute.internal",
+  "PublicDnsName": "public_dns.eu-west-1.compute.amazonaws.com",
+  "StateTransitionReason": "",
+  "AmiLaunchIndex": 0,
+  "ProductCodes": [],
+  "InstanceType": "m3.2xlarge",
+  "LaunchTime": "2016-06-06T14:29:35.000Z",
+  "Placement": {
+    "AvailabilityZone": "eu-west-1a",
+    "GroupName": "",
+    "Tenancy": "default"
+  },
+  "Platform": "windows",
+  "Monitoring": {
+    "State": "disabled"
+  },
+  "PrivateIpAddress": "10.102.1.59",
+  "PublicIpAddress": "54.170.18.171",
+  "Architecture": "x86_64",
+  "RootDeviceType": "ebs",
+  "RootDeviceName": "/dev/sda1",
+  "BlockDeviceMappings": [
+    {
+      "DeviceName": "/dev/sda1",
+      "Ebs": {
+        "VolumeId": "vol-81013b73",
+        "Status": "attached",
+        "AttachTime": "2016-06-06T14:29:35.000Z",
+        "DeleteOnTermination": true
+      }
+    }
+  ],
+  "VirtualizationType": "hvm",
+  "InstanceLifecycle": "spot",
+  "SpotInstanceRequestId": "sir-01h7m61k",
+  "ClientToken": "a2f5f654-fbcb-462c-93aa-d613f0b12991",
+  "Tags": [],
+  "SecurityGroups": [
+    {
+      "GroupName": "default",
+      "GroupId": "sg-953c09e1"
+    }
+  ],
+  "Hypervisor": "xen",
+  "NetworkInterfaces": [],
+  "EbsOptimized": false,
+  "TotalDiskSpace": 30
+}

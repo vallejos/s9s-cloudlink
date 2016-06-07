@@ -1,0 +1,10 @@
+{
+  "digitalocean": {
+    "apiKey": "some_key_example"
+  },
+  "aws": {
+    "accessKeyId": "some_key_example",
+    "secretAccessKey": "some_secret_key_example",
+    "region": "eu-west-1"
+  }
+}

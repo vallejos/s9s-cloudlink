@@ -1,0 +1,29 @@
+{
+  "name": "s9s-cloudlink",
+  "version": "0.0.1",
+  "main": "src/CloudLink.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:simon-s9/s9s-cloudlink.git"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --recursive",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "eslint": "./node_modules/.bin/eslint -c .eslintrc.yml src"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.3.16",
+    "body-parser": "^1.15.1",
+    "do-wrapper": "^3.6.1",
+    "express": "^4.13.4",
+    "promise": "^7.1.1",
+    "s9s-filesystem": "^1.0.5",
+    "s9s-namespace": "0.0.1"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.9",
+    "eslint": "^2.11.1",
+    "istanbul-harmony": "^0.3.16",
+    "mocha": "^2.5.3"
+  }
+}

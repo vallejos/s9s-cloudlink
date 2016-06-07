@@ -1,0 +1,9 @@
+[
+  "listInstances",
+  "addInstance",
+  "listRegions",
+  "listSizes",
+  "listVolumes",
+  "listDistributions",
+  "getInstanceStatus"
+]
