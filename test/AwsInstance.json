@@ -1,6 +1,6 @@
 {
-  "InstanceId": "i-cb782641",
-  "ImageId": "ami-a78603d4",
+  "InstanceId": "i-ii000000",
+  "ImageId": "ami-a000000",
   "State": {
     "Code": 16,
     "Name": "running"
@@ -17,12 +17,12 @@
     "GroupName": "",
     "Tenancy": "default"
   },
-  "Platform": "windows",
+  "Platform": "linux",
   "Monitoring": {
     "State": "disabled"
   },
-  "PrivateIpAddress": "10.102.1.59",
-  "PublicIpAddress": "54.170.18.171",
+  "PrivateIpAddress": "1.1.1.1",
+  "PublicIpAddress": "2.2.2.2",
   "Architecture": "x86_64",
   "RootDeviceType": "ebs",
   "RootDeviceName": "/dev/sda1",
@@ -30,7 +30,7 @@
     {
       "DeviceName": "/dev/sda1",
       "Ebs": {
-        "VolumeId": "vol-81013b73",
+        "VolumeId": "vol-vlvlvlvl",
         "Status": "attached",
         "AttachTime": "2016-06-06T14:29:35.000Z",
         "DeleteOnTermination": true
@@ -39,13 +39,13 @@
   ],
   "VirtualizationType": "hvm",
   "InstanceLifecycle": "spot",
-  "SpotInstanceRequestId": "sir-01h7m61k",
-  "ClientToken": "a2f5f654-fbcb-462c-93aa-d613f0b12991",
+  "SpotInstanceRequestId": "sir-sisisisi",
+  "ClientToken": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa",
   "Tags": [],
   "SecurityGroups": [
     {
       "GroupName": "default",
-      "GroupId": "sg-953c09e1"
+      "GroupId": "sg-sgsgsgsg"
     }
   ],
   "Hypervisor": "xen",

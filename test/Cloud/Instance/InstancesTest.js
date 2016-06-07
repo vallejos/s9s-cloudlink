@@ -11,7 +11,30 @@ const InstanceMethodNotImplementedError = CloudLink.namespace
 
 for (let i in clouds) {
     if (clouds.hasOwnProperty(i)) {
-        const Instance= CloudLink.namespace.requireOnce(`Cloud/Instance/${clouds[i]}Instance`);
-        const instance = new Instance;
+        describe(`Cloud/Instance/${clouds[i]}Instance`, () => {
+            const Instance = CloudLink.namespace
+                .requireOnce(`Cloud/Instance/${clouds[i]}Instance`);
+            const InstanceMethodNotImplementedError = CloudLink.namespace
+                .requireOnce('Cloud/Instance/InstanceMethodNotImplementedError');
+            const config = Filesystem.readJson(__dirname + `/../../${clouds[i]}Instance.json`);
+            const instance = new Instance(config);
+            instanceMethods
+                .forEach((method) => {
+                    it(`Should implement ${method}`, () => {
+                        assert.strictEqual(typeof(instance[method]), 'function', `${method} is not implemented`);
+                    });
+                    it(`Should not throw InstanceMethodNotImplementedError`, () => {
+                        assert.doesNotThrow(
+                            () => {
+                                instance[method]();
+                            },
+                            InstanceMethodNotImplementedError,
+                            `InstanceMethodNotImplementedError thrown in ${clouds[i]}::${method}`
+                        );
+                    });
+                });
+        });
+
+
     }
 }

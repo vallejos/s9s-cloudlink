@@ -22,7 +22,7 @@ for (let i in clouds) {
                             cloud[method]();
                         },
                         CloudMethodNotImplementedError,
-                        `${method} should not throw CloudMethodNotImplementedError`
+                        `CloudMethodNotImplementedError thrown in ${clouds[i]}::${method}`
                     );
                 });
             });
