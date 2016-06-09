@@ -1,5 +1,9 @@
 'use strict';
 
+if (parseFloat(process.versions.node) < 6) {
+    throw new Error('Unsupported NodeJS version, please use NodeJS 6.x or higher.');
+}
+
 /**
  * List of supported clouds (code => name)
  * @enum {string}

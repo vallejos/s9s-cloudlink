@@ -21,8 +21,13 @@
     "s9s-namespace": "0.0.1"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
     "coveralls": "^2.11.9",
     "eslint": "^2.11.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
     "istanbul-harmony": "^0.3.16",
     "mocha": "^2.5.3"
   }
