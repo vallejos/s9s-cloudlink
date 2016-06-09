@@ -23,13 +23,30 @@ exports = module.exports = (namespace) => {
         static getMethodArguments(method) {
             const args = {
                 addInstance: {
-                    'params': 'object'
+                    'names': 'object',
+                    'region': 'string',
+                    'size': 'string',
+                    'image': 'string',
+                    'sshKeys': [
+                        'string',
+                        'object'
+                    ]
                 },
                 listDistributions: {
                     'filters': 'object'
                 },
                 getInstanceStatus: {
                     'instanceId': [
+                        'string',
+                        'number'
+                    ]
+                },
+                addKey: {
+                    'name': 'string',
+                    'publicKey': 'string'
+                },
+                deleteKey: {
+                    'id': [
                         'string',
                         'number'
                     ]
@@ -96,6 +113,33 @@ exports = module.exports = (namespace) => {
          */
         getInstanceStatus({instanceId:instanceId} = {}) {
             throw new CloudMethodNotImplementedError('getInstanceStatus is not implemented');
+        }
+
+        /**
+         * Abstraction: Returns a promise with a list of keys
+         * @returns {Promise}
+         */
+        listKeys() {
+            throw new CloudMethodNotImplementedError('listKeys is not implemented');
+        }
+
+        /**
+         * Abstraction: Returns a promise with the result of addKey operation
+         * @param name
+         * @param publicKey
+         * @return {Promise}
+         */
+        addKey({name = null, publicKey = null} = {}) {
+            throw new CloudMethodNotImplementedError('addKey is not implemented');
+        }
+
+        /**
+         * Abstraction: Returns a promise with the result of deleteKey Operation
+         * @param id
+         * @return {Promise}
+         */
+        deleteKey({id = null} = {}) {
+            throw new CloudMethodNotImplementedError('deleteKey is not implemented');
         }
 
     }

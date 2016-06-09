@@ -111,7 +111,6 @@ exports
             cloudInstance[method]
                 .call(cloudInstance, requestArguments)
                 .then((result) => {
-                    console.log(JSON.stringify(result, null, 2));
                     response.json({
                         status: true,
                         data: result.toJson ? result.toJson() : result

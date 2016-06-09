@@ -37,7 +37,47 @@ exports = module.exports = (namespace) => {
         /**
          * @inheritdoc
          */
-        addInstance({params = {}} = {}) {
+        addInstance({
+            names = null,
+            region = null,
+            size = null,
+            image = null,
+            sshKeys = null
+        } = {}) {
+            return new Promise((resolve, reject) => {
+                const params = {
+                    names: names,
+                    region: region,
+                    size: size,
+                    image: image,
+                    ssh_keys: sshKeys,
+                    backups: false,
+                    ipv6: false,
+                    user_data: null,
+                    private_networking: true
+                };
+                this.api
+                    .dropletsCreate(params, (error, inMessage, data) => {
+                        if (error) {
+                            reject(error);
+                        } else if (data.droplet || data.droplets) {
+                            const list = new InstanceList();
+                            if (data.droplet) {
+                                list.push(
+                                    new DigitalOceanInstance(data.droplet)
+                                );
+                            } else {
+                                data.droplets.forEach((droplet) => {
+                                    list.push(
+                                        new DigitalOceanInstance(droplet)
+                                    );
+                                });
+                            }
+                        } else {
+                            reject(data.message || 'Unknown error');
+                        }
+                    });
+            });
         }
 
         /**
@@ -188,6 +228,75 @@ exports = module.exports = (namespace) => {
                             resolve(result);
                         } else {
                             reject(data.message || 'Unknown error');
+                        }
+                    });
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        listKeys() {
+            return new Promise((resolve, reject) => {
+                this.api
+                    .accountGetKeys({}, (error, inMessage, data) => {
+                        if (error) {
+                            reject(error);
+                        } else if (data.ssh_keys) {
+                            resolve(
+                                data.ssh_keys.map((key) => {
+                                    return {
+                                        id: key.id,
+                                        name: key.name,
+                                        fingerprint: key.fingerprint
+                                    };
+                                })
+                            );
+                        } else {
+                            reject(data.message || 'Unknown error');
+                        }
+                    });
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        addKey({name = null, publicKey = null} = {}) {
+            return new Promise((resolve, reject) => {
+                this.api
+                    .accountAddKey({
+                        name: name,
+                        public_key: publicKey
+                    }, (error, inMessage, data) => {
+                        if (error) {
+                            reject(error);
+                        } else if (data.ssh_key) {
+                            resolve({
+                                id: data.ssh_key.id,
+                                name: data.ssh_key.name,
+                                fingerprint: data.ssh_key.fingerprint
+                            });
+                        } else {
+                            reject(data.message || 'Unknown error');
+                        }
+                    });
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        deleteKey({id = null} = {}) {
+            return new Promise((resolve, reject) => {
+                this.api
+                    .accountDeleteKey(id, (error, inMessage, data) => {
+                        if (error) {
+                            reject(error);
+                        } else if (data !== undefined) {
+                            reject(data.message || 'Unknown error');
+                        } else {
+                            resolve(true);
                         }
                     });
             });

@@ -2,14 +2,21 @@
 
 exports = module.exports = (namespace) => {
 
-    const BaseCloud = namespace.requireOnce('Cloud/Base/BaseCloud');
-    const InstanceList = namespace.requireOnce('Cloud/Instance/InstanceList');
-    const AwsInstance = namespace.requireOnce('Cloud/Instance/AwsInstance');
+    const BaseCloud = namespace
+        .requireOnce('Cloud/Base/BaseCloud');
+    const InstanceList = namespace
+        .requireOnce('Cloud/Instance/InstanceList');
+    const AwsInstance = namespace
+        .requireOnce('Cloud/Instance/AwsInstance');
 
-    const Region = namespace.requireOnce('Cloud/Instance/Wrappers/Region');
-    const Distribution = namespace.requireOnce('Cloud/Instance/Wrappers/Distribution');
-    const Status = namespace.requireOnce('Cloud/Instance/Wrappers/Status');
-    const Size = namespace.requireOnce('Cloud/Instance/Wrappers/Size');
+    const Region = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Region');
+    const Distribution = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Distribution');
+    const Status = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Status');
+    const Size = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Size');
 
     const Aws = require('aws-sdk');
     const Promise = require('promise');
@@ -250,6 +257,70 @@ exports = module.exports = (namespace) => {
             });
         }
 
+        /**
+         * @inheritdoc
+         */
+        listKeys() {
+            return new Promise((resolve, reject) => {
+                this.api
+                    .describeKeyPairs({}, (error, data) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(
+                                (data.KeyPairs || []).map((key) => {
+                                    return {
+                                        id: key.KeyName,
+                                        name: key.KeyName,
+                                        fingerprint: key.KeyFingerprint
+                                    }
+                                })
+                            );
+                        }
+                    });
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        addKey({name = null, publicKey = null} = {}) {
+            return new Promise((resolve, reject) => {
+                this.api
+                    .importKeyPair({
+                        KeyName: name,
+                        PublicKeyMaterial: publicKey
+                    }, (error, data) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve({
+                                id: data.KeyName,
+                                name: data.KeyName,
+                                fingerprint: data.KeyFingerprint
+                            });
+                        }
+                    });
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        deleteKey({id = null} = {}) {
+            return new Promise((resolve, reject) => {
+                this.api
+                    .deleteKeyPair({
+                        KeyName: id
+                    }, (error, data) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+            });
+        }
     }
 
 };
