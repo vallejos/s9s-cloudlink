@@ -5,5 +5,5 @@
     "type": "mocha",
     "source": "./test"
   },
-  "unexportIdentifier":true
+  "unexportIdentifier": true
 }

@@ -2,12 +2,15 @@
 
 exports = module.exports = (namespace) => {
 
-    const CloudMethodNotImplementedError = namespace.requireOnce('Cloud/CloudMethodNotImplementedError');
+    const CloudMethodNotImplementedError = namespace
+        .requireOnce('Cloud/CloudMethodNotImplementedError');
 
     /**
      * Abstract cloud class
+     * @abstract
+     * @property {{}} config
      */
-    return class BaseCloud {
+    class BaseCloud {
 
         /**
          * @param {{}} config
@@ -50,19 +53,31 @@ exports = module.exports = (namespace) => {
                         'string',
                         'number'
                     ]
+                },
+                listVpcs: {
+                    'filters': 'object',
+                    'ids': 'object'
+                },
+                addVpc: {
+                    'cidr': 'string',
+                    'tenancy': 'string'
                 }
             };
             return args[method] || null;
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with a list of instances
          * @returns {Promise}
          */
         listInstances() {
-            throw new CloudMethodNotImplementedError('listInstances is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'listInstances is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Creates a new instance
          * @param params
@@ -70,59 +85,80 @@ exports = module.exports = (namespace) => {
          * @abstract
          */
         addInstance({params:params = {}} = {}) {
-            throw new CloudMethodNotImplementedError('addInstance is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'addInstance is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with a list of regions
          * @returns {Promise}
          */
         listRegions() {
-            throw new CloudMethodNotImplementedError('listRegions is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'listRegions is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with a list of instance sizes
          * @returns {Promise}
          */
         listSizes() {
-            throw new CloudMethodNotImplementedError('listSizes is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'listSizes is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with a list of distributions
          * @param {{}} [filters]
          * @returns {Promise}
          */
         listDistributions({filters = {}} = {}) {
-            throw new CloudMethodNotImplementedError('listDistributions is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'listDistributions is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with a list of volumes
          * @returns Promise
          */
         listVolumes() {
-            throw new CloudMethodNotImplementedError('listVolumes is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'listVolumes is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with instance status
          * @param instanceId
          * @returns {Promise}
          */
         getInstanceStatus({instanceId:instanceId} = {}) {
-            throw new CloudMethodNotImplementedError('getInstanceStatus is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'getInstanceStatus is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with a list of keys
          * @returns {Promise}
          */
         listKeys() {
-            throw new CloudMethodNotImplementedError('listKeys is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'listKeys is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with the result of addKey operation
          * @param name
@@ -130,18 +166,76 @@ exports = module.exports = (namespace) => {
          * @return {Promise}
          */
         addKey({name = null, publicKey = null} = {}) {
-            throw new CloudMethodNotImplementedError('addKey is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'addKey is not implemented'
+            );
         }
 
+        // noinspection JSUnusedGlobalSymbols
         /**
-         * Abstraction: Returns a promise with the result of deleteKey Operation
+         * Abstraction: Returns a promise with the result of deleteKey operation
          * @param id
          * @return {Promise}
          */
         deleteKey({id = null} = {}) {
-            throw new CloudMethodNotImplementedError('deleteKey is not implemented');
+            throw new CloudMethodNotImplementedError(
+                'deleteKey is not implemented'
+            );
+        }
+
+        // noinspection JSUnusedGlobalSymbols
+        /**
+         * Abstraction: Returns a promise with a list of Vpcs
+         * @param {{}} filters
+         * @param {[]} ids
+         * @returns {Promise}
+         */
+        listVpcs({filters = {}, ids = []} = {}) {
+            throw new CloudMethodNotImplementedError(
+                'listVpcs is not implemented'
+            );
+        }
+
+        // noinspection JSUnusedGlobalSymbols
+        /**
+         * Abstraction: Returns a promise with the result of addVpc operation
+         * @param {string} cidr
+         * @param {string} tenancy
+         * @returns {Promise}
+         */
+        addVpc({cidr = null, tenancy = 'default'} = {}) {
+            throw new CloudMethodNotImplementedError(
+                'addVpc is not implemented'
+            );
+        }
+
+        // noinspection JSUnusedGlobalSymbols
+        /**
+         * Abstraction: Returns a promise with a list of SubNets
+         * @param {{}} filters
+         * @param {[]} ids
+         * @returns {Promise}
+         */
+        listSubNets({filters = {}, ids = []} = {}) {
+            throw new CloudMethodNotImplementedError(
+                'listSubNets is not implemented'
+            );
+        }
+
+        // noinspection JSUnusedGlobalSymbols
+        /**
+         * Abstraction: Returns a promise with the result of addSubNet operation
+         * @param {string} cidr
+         * @param {string} vpcId
+         */
+        addSubNet({cidr = null, vpcId = null} = {}) {
+            throw new CloudMethodNotImplementedError(
+                'addSubNet is not implemented'
+            );
         }
 
     }
+
+    return BaseCloud;
 
 };

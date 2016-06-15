@@ -1,11 +1,13 @@
 'use strict';
 
-exports = module.exports = (namespace) => {
+exports = module.exports = () => {
 
     /**
      * Status class
+     * @property {number} status
+     * @property {string} code
      */
-    return class Status {
+    class Status {
 
         /**
          * @returns {number}
@@ -68,5 +70,7 @@ exports = module.exports = (namespace) => {
         }
 
     }
+
+    return Status;
 
 };

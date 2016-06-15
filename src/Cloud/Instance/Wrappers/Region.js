@@ -1,6 +1,6 @@
 'use strict';
 
-exports = module.exports = (namespace) => {
+exports = module.exports = () => {
 
     /**
      * Region class
@@ -8,7 +8,7 @@ exports = module.exports = (namespace) => {
      * @property {string} code
      * @property {string} domain
      */
-    return class Region {
+    class Region {
 
         /**
          * @param {string} name
@@ -22,5 +22,7 @@ exports = module.exports = (namespace) => {
         }
 
     }
+
+    return Region;
 
 };

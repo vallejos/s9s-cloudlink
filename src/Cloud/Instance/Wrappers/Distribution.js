@@ -1,11 +1,14 @@
 'use strict';
 
-exports = module.exports = (namespace) => {
+exports = module.exports = () => {
 
     /**
      * Distribution class
+     * @property {number|string} id
+     * @property {string} name
+     * @property {string} code
      */
-    return class Distribution {
+    class Distribution {
 
         /**
          * @param id
@@ -20,4 +23,6 @@ exports = module.exports = (namespace) => {
 
     }
 
-}
+    return Distribution;
+
+};

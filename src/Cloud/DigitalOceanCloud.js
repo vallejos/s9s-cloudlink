@@ -2,14 +2,23 @@
 
 exports = module.exports = (namespace) => {
 
-    const BaseCloud = namespace.requireOnce('Cloud/Base/BaseCloud');
-    const InstanceList = namespace.requireOnce('Cloud/Instance/InstanceList');
-    const DigitalOceanInstance = namespace.requireOnce('Cloud/Instance/DigitalOceanInstance');
+    /* eslint max-statements: ["error", 20] */
 
-    const Region = namespace.requireOnce('Cloud/Instance/Wrappers/Region');
-    const Distribution = namespace.requireOnce('Cloud/Instance/Wrappers/Distribution');
-    const Status = namespace.requireOnce('Cloud/Instance/Wrappers/Status');
-    const Size = namespace.requireOnce('Cloud/Instance/Wrappers/Size');
+    const BaseCloud = namespace
+        .requireOnce('Cloud/Base/BaseCloud');
+    const InstanceList = namespace
+        .requireOnce('Cloud/Instance/InstanceList');
+    const DigitalOceanInstance = namespace
+        .requireOnce('Cloud/Instance/DigitalOceanInstance');
+
+    const Region = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Region');
+    const Distribution = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Distribution');
+    const Status = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Status');
+    const Size = namespace
+        .requireOnce('Cloud/Instance/Wrappers/Size');
 
     const DigitalOcean = require('do-wrapper');
     const Promise = require('promise');
@@ -17,8 +26,12 @@ exports = module.exports = (namespace) => {
     /**
      * Digitalocean wrapper class
      * @extends {BaseCloud}
+     * @property {{
+     *  apiKey:string,
+     *  pageSize:number
+     * }} config
      */
-    return class DigitalOceanCloud extends BaseCloud {
+    class DigitalOceanCloud extends BaseCloud {
 
         /**
          * @inheritdoc
@@ -45,11 +58,14 @@ exports = module.exports = (namespace) => {
             sshKeys = null
         } = {}) {
             return new Promise((resolve, reject) => {
+
+                /* eslint camelcase: ["error", {properties: "never"}] */
+
                 const params = {
-                    names: names,
-                    region: region,
-                    size: size,
-                    image: image,
+                    names,
+                    region,
+                    size,
+                    image,
                     ssh_keys: sshKeys,
                     backups: false,
                     ipv6: false,
@@ -57,26 +73,41 @@ exports = module.exports = (namespace) => {
                     private_networking: true
                 };
                 this.api
-                    .dropletsCreate(params, (error, inMessage, data) => {
-                        if (error) {
-                            reject(error);
-                        } else if (data.droplet || data.droplets) {
-                            const list = new InstanceList();
-                            if (data.droplet) {
-                                list.push(
-                                    new DigitalOceanInstance(data.droplet)
-                                );
-                            } else {
-                                data.droplets.forEach((droplet) => {
+                    .dropletsCreate(
+                        params,
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  droplets:{},
+                         *  droplet:{},
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
+                        (error, inMessage, data) => {
+                            if (error) {
+                                reject(error);
+                            } else if (data.droplet || data.droplets) {
+                                const list = new InstanceList();
+                                if (data.droplet) {
                                     list.push(
-                                        new DigitalOceanInstance(droplet)
+                                        new DigitalOceanInstance(data.droplet)
                                     );
-                                });
+                                } else {
+                                    data.droplets.forEach((droplet) => {
+                                        list.push(
+                                            new DigitalOceanInstance(droplet)
+                                        );
+                                    });
+                                }
+                            } else {
+                                reject(data.message || 'Unknown error');
                             }
-                        } else {
-                            reject(data.message || 'Unknown error');
                         }
-                    });
+                    );
             });
         }
 
@@ -85,9 +116,21 @@ exports = module.exports = (namespace) => {
          */
         listInstances() {
             return new Promise((resolve, reject) => {
+                // noinspection JSCheckFunctionSignatures
                 this.api
                     .dropletsGetAll(
                         {},
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  droplets:{},
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
                         (error, inMessage, data) => {
                             if (error) {
                                 reject(error);
@@ -111,9 +154,21 @@ exports = module.exports = (namespace) => {
          */
         listRegions() {
             return new Promise((resolve, reject) => {
+                // noinspection JSCheckFunctionSignatures
                 this.api
                     .regionsGetAll(
                         {},
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  regions:{},
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
                         (error, inMessage, data) => {
                             if (error) {
                                 reject(error);
@@ -140,26 +195,41 @@ exports = module.exports = (namespace) => {
          */
         listSizes() {
             return new Promise((resolve, reject) => {
+                // noinspection JSCheckFunctionSignatures
                 this.api
-                    .sizesGetAll({}, (error, inMessage, data) => {
-                        if (error) {
-                            reject(error);
-                        } else if (data.sizes) {
-                            const sizes = [];
-                            data.sizes
-                                .forEach((size) => {
-                                    sizes.push(new Size(
-                                        size.slug,
-                                        size.vcpus,
-                                        size.memory,
-                                        size.disk
-                                    ));
-                                });
-                            resolve(sizes);
-                        } else {
-                            reject(data.message || 'Unknown error');
+                    .sizesGetAll(
+                        {},
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  sizes:{},
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
+                        (error, inMessage, data) => {
+                            if (error) {
+                                reject(error);
+                            } else if (data.sizes) {
+                                const sizes = [];
+                                data.sizes
+                                    .forEach((size) => {
+                                        sizes.push(new Size(
+                                            size.slug,
+                                            size.vcpus,
+                                            size.memory,
+                                            size.disk
+                                        ));
+                                    });
+                                resolve(sizes);
+                            } else {
+                                reject(data.message || 'Unknown error');
+                            }
                         }
-                    });
+                    );
             });
         }
 
@@ -168,30 +238,50 @@ exports = module.exports = (namespace) => {
          */
         listDistributions({filters = {}} = {}) {
             return new Promise((resolve, reject) => {
+                // noinspection JSCheckFunctionSignatures
                 this.api
-                    .imagesGetAll({
-                        type: 'distribution'
-                    }, (error, inMessage, data) => {
-                        if (error) {
-                            reject(error);
-                        } else if (data.images) {
-                            resolve(
-                                (data.images || []).map((image) => {
-                                    return new Distribution(
-                                        image.id,
-                                        [image.distribution, image.name].join(' '),
-                                        image.slug
-                                    );
-                                })
-                            );
-                        } else {
-                            reject(data.message || 'Unknown error');
+                    .imagesGetAll(
+                        {
+                            type: 'distribution'
+                        },
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  images:{
+                         *    distribution:string,
+                         *    name:string,
+                         *    slug:string
+                         *  },
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
+                        (error, inMessage, data) => {
+                            if (error) {
+                                reject(error);
+                            } else if (data.images) {
+                                resolve(
+                                    (data.images || []).map((image) => {
+                                        return new Distribution(
+                                            image.id,
+                                            [image.distribution, image.name].join(' '),
+                                            image.slug
+                                        );
+                                    })
+                                );
+                            } else {
+                                reject(data.message || 'Unknown error');
+                            }
                         }
-                    });
+                    );
             });
         }
 
         /**
+         * This method is not implementable for DigitalOcean
          * @inheritdoc
          */
         listVolumes() {
@@ -206,30 +296,46 @@ exports = module.exports = (namespace) => {
         getInstanceStatus({instanceId:instanceId} = {}) {
             return new Promise((resolve, reject) => {
                 this.api
-                    .dropletsGetById(instanceId, (error, inMessage, data) => {
-                        if (error) {
-                            reject(error);
-                        } else if (data.droplet && data.droplet.status) {
-                            let result = new Status(Status.StatusUnknown);
-                            switch (data.droplet.status) {
-                                case 'new':
-                                    result = new Status(Status.StatusPending);
-                                    break;
-                                case 'active':
-                                    result = new Status(Status.StatusRunning);
-                                    break;
-                                case 'off':
-                                    result = new Status(Status.StatusShutdown);
-                                    break;
-                                case 'archive':
-                                    result = new Status(Status.StatusTerminated);
-                                    break;
+                    .dropletsGetById(
+                        instanceId,
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  droplet:{
+                         *    status:string
+                         *  },
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
+                        (error, inMessage, data) => {
+                            if (error) {
+                                reject(error);
+                            } else if (data.droplet && data.droplet.status) {
+                                let result = new Status(Status.StatusUnknown);
+                                switch (data.droplet.status) {
+                                    case 'new':
+                                        result = new Status(Status.StatusPending);
+                                        break;
+                                    case 'active':
+                                        result = new Status(Status.StatusRunning);
+                                        break;
+                                    case 'off':
+                                        result = new Status(Status.StatusShutdown);
+                                        break;
+                                    case 'archive':
+                                        result = new Status(Status.StatusTerminated);
+                                        break;
+                                }
+                                resolve(result);
+                            } else {
+                                reject(data.message || 'Unknown error');
                             }
-                            resolve(result);
-                        } else {
-                            reject(data.message || 'Unknown error');
                         }
-                    });
+                    );
             });
         }
 
@@ -238,24 +344,39 @@ exports = module.exports = (namespace) => {
          */
         listKeys() {
             return new Promise((resolve, reject) => {
+                // noinspection JSCheckFunctionSignatures
                 this.api
-                    .accountGetKeys({}, (error, inMessage, data) => {
-                        if (error) {
-                            reject(error);
-                        } else if (data.ssh_keys) {
-                            resolve(
-                                data.ssh_keys.map((key) => {
-                                    return {
-                                        id: key.id,
-                                        name: key.name,
-                                        fingerprint: key.fingerprint
-                                    };
-                                })
-                            );
-                        } else {
-                            reject(data.message || 'Unknown error');
+                    .accountGetKeys(
+                        {},
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  ssh_keys:{},
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
+                        (error, inMessage, data) => {
+                            if (error) {
+                                reject(error);
+                            } else if (data.ssh_keys) {
+                                resolve(
+                                    data.ssh_keys.map((key) => {
+                                        return {
+                                            id: key.id,
+                                            name: key.name,
+                                            fingerprint: key.fingerprint
+                                        };
+                                    })
+                                );
+                            } else {
+                                reject(data.message || 'Unknown error');
+                            }
                         }
-                    });
+                    );
             });
         }
 
@@ -265,22 +386,40 @@ exports = module.exports = (namespace) => {
         addKey({name = null, publicKey = null} = {}) {
             return new Promise((resolve, reject) => {
                 this.api
-                    .accountAddKey({
-                        name: name,
-                        public_key: publicKey
-                    }, (error, inMessage, data) => {
-                        if (error) {
-                            reject(error);
-                        } else if (data.ssh_key) {
-                            resolve({
-                                id: data.ssh_key.id,
-                                name: data.ssh_key.name,
-                                fingerprint: data.ssh_key.fingerprint
-                            });
-                        } else {
-                            reject(data.message || 'Unknown error');
+                    .accountAddKey(
+                        {
+                            name,
+                            public_key: publicKey
+                        },
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  ssh_key:{
+                         *    id:number,
+                         *    name:string,
+                         *    fingerprint:string
+                         *  },
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
+                        (error, inMessage, data) => {
+                            if (error) {
+                                reject(error);
+                            } else if (data.ssh_key) {
+                                resolve({
+                                    id: data.ssh_key.id,
+                                    name: data.ssh_key.name,
+                                    fingerprint: data.ssh_key.fingerprint
+                                });
+                            } else {
+                                reject(data.message || 'Unknown error');
+                            }
                         }
-                    });
+                    );
             });
         }
 
@@ -290,18 +429,54 @@ exports = module.exports = (namespace) => {
         deleteKey({id = null} = {}) {
             return new Promise((resolve, reject) => {
                 this.api
-                    .accountDeleteKey(id, (error, inMessage, data) => {
-                        if (error) {
-                            reject(error);
-                        } else if (data !== undefined) {
-                            reject(data.message || 'Unknown error');
-                        } else {
-                            resolve(true);
+                    .accountDeleteKey(
+                        id,
+
+                        /**
+                         * Handle api response
+                         * @param error
+                         * @param inMessage
+                         * @param {{
+                         *  id:string,
+                         *  message:string
+                         * }} data
+                         */
+                        (error, inMessage, data) => {
+
+                            /* eslint no-negated-condition: "off" */
+
+                            if (error) {
+                                reject(error);
+                            } else if (data !== undefined) {
+                                reject(data.message || 'Unknown error');
+                            } else {
+                                resolve(true);
+                            }
                         }
-                    });
+                    );
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        listVpcs({filters = {}, ids = []} = {}) {
+            return new Promise((resolve, reject) => {
+                reject('listVpcs is not supported for DigitalOcean');
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        addVpc({cidr = null, tenancy = 'default'} = {}) {
+            return new Promise((resolve, reject) => {
+                reject('addVpc is not supported for DigitalOcean');
             });
         }
 
     }
+
+    return DigitalOceanCloud;
 
 };

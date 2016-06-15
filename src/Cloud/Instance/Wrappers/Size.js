@@ -1,11 +1,15 @@
 'use strict';
 
-exports = module.exports = (namespace) => {
+exports = module.exports = () => {
 
     /**
      * Size class
+     * @property {string} code
+     * @property {number} cpu
+     * @property {number} memory
+     * @property {number} disk
      */
-    return class Size {
+    class Size {
 
         /**
          * @param code
@@ -21,5 +25,7 @@ exports = module.exports = (namespace) => {
         }
 
     }
+
+    return Size;
 
 };

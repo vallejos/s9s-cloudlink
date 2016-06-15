@@ -11,6 +11,7 @@ npm install s9s-cloudlink
 ```
 
 ## Older distributions of NodeJS
+Not tested. Not recommended. Use NodeJS 6.x instead.
 ```
 gulp babel
 ```

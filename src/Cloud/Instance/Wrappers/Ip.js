@@ -1,11 +1,15 @@
 'use strict';
 
-exports = module.exports = (namespace) => {
+exports = module.exports = () => {
 
     /**
      * Ip class
+     * @property {number} type
+     * @property {string} ip
+     * @property {string} netmask
+     * @property {string} gateway
      */
-    return class Ip {
+    class Ip {
 
         /**
          * @returns {number}
@@ -35,5 +39,7 @@ exports = module.exports = (namespace) => {
         }
 
     }
+
+    return Ip;
 
 };
