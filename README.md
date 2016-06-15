@@ -1,16 +1,19 @@
 # CloudLink
 
+Standardized cloud integration. Requires NodeJS 6.x or higher.
+
   [![Version][npm-image]][npm-url]
   [![Build][travis-image]][travis-url]
-  [![Coverage][coveralls-image]][coveralls-url]
-
-Standardized cloud integration. Requires NodeJS 6.x or higher. 
+  [![Coverage][coveralls-image]][coveralls-url] 
 
 ## Installation
 ```
 npm install s9s-cloudlink
 node service
 ```
+
+## API
+Refer to [Cloudlink API](https://github.com/simon-s9/s9s-cloudlink-api)
 
 ## Older distributions of NodeJS
 Not tested. Not recommended. Use NodeJS 6.x instead.
@@ -34,3 +37,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [travis-url]: https://travis-ci.org/simon-s9/s9s-cloudlink
 [coveralls-image]: https://coveralls.io/repos/github/simon-s9/s9s-cloudlink/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/simon-s9/s9s-cloudlink?branch=master
+[api-url]: https://github.com/simon-s9/s9s-cloudlink-api
