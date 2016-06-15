@@ -28,6 +28,7 @@ exports = module.exports = (namespace) => {
      * @extends {BaseCloud}
      * @property {{
      *  apiKey:string,
+     *  token:string,
      *  pageSize:number
      * }} config
      */
@@ -42,7 +43,7 @@ exports = module.exports = (namespace) => {
                 throw new Error(`Api Key is not defined`);
             }
             this.api = new DigitalOcean(
-                this.config.apiKey,
+                this.config.apiKey || this.config.token,
                 this.config.pageSize || 200
             );
         }
