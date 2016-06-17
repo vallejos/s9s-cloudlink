@@ -10,7 +10,7 @@ const CloudMethodNotImplementedError = CloudLink.namespace.requireOnce('Cloud/Cl
 
 for (let i in clouds) {
     if (clouds.hasOwnProperty(i)) {
-        const cloud = CloudLink.factory(clouds[i], configs[i]);
+        const cloud = CloudLink.factory(i, configs[i]);
         describe(`Cloud/${clouds[i]}Cloud`, () => {
             cloudMethods.forEach((method) => {
                 it(`Should implement ${method}`, () => {

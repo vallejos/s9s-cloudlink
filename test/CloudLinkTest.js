@@ -91,7 +91,7 @@ describe('CloudLink', () => {
         assert.strictEqual(typeof(CloudLink.factory), 'function', 'factory is not a function');
         for (let code in configs) {
             if (configs.hasOwnProperty(code)) {
-                const instance = CloudLink.factory(allowedClouds[code], configs[code]);
+                const instance = CloudLink.factory(code, configs[code]);
                 const Cloud = CloudLink.namespace.requireOnce(`Cloud/${allowedClouds[code]}Cloud`);
                 assert.strictEqual(instance instanceof Cloud, true, `Failed to load cloud instance by code ${code}`);
             }
