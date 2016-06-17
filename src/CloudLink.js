@@ -53,7 +53,7 @@ class CloudLink {
      * @returns {BaseCloud}
      */
     static factory(cloud, config) {
-        const Cloud = namespace.requireOnce(`Cloud/${cloud}Cloud`);
+        const Cloud = namespace.requireOnce(`Cloud/${clouds[cloud]}Cloud`);
         return new Cloud(config);
     }
 

@@ -39,7 +39,7 @@ exports = module.exports = (namespace) => {
          */
         constructor(config) {
             super(config);
-            if (!this.config.apiKey) {
+            if (!this.config.apiKey && !this.config.token) {
                 throw new Error(`Api Key is not defined`);
             }
             this.api = new DigitalOcean(
