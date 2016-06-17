@@ -83,7 +83,7 @@ exports = module.exports = (namespace) => {
                             InstanceType: size,
                             MinCount: 1,
                             MaxCount: names.length,
-                            KeyName: sshKeys,
+                            KeyName: sshKeys[0],
                             Monitoring: {
                                 Enabled: false
                             },
