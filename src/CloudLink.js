@@ -84,7 +84,7 @@ class CloudLink {
      */
     static methodArguments(cloud, method) {
         return namespace
-            .requireOnce(`Cloud/${cloud}Cloud`)
+            .requireOnce(`Cloud/${clouds[cloud]}Cloud`)
             .getMethodArguments(method);
     }
 
