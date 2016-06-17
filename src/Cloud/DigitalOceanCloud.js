@@ -104,6 +104,7 @@ exports = module.exports = (namespace) => {
                                         );
                                     });
                                 }
+                                resolve(list);
                             } else {
                                 reject(data.message || 'Unknown error');
                             }
