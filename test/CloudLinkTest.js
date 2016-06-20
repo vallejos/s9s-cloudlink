@@ -80,8 +80,8 @@ describe('CloudLink', () => {
 
     it('Should return method arguments', () => {
         assert.strictEqual(typeof(CloudLink.methodArguments), 'function', 'methodArguments is not a function');
-        assert.strictEqual(CloudLink.methodArguments('DigitalOcean', 'listInstances'), null);
-        const args = CloudLink.methodArguments('DigitalOcean', 'getInstanceStatus');
+        assert.strictEqual(typeof(CloudLink.methodArguments('digitalocean', 'listInstances')), 'object');
+        const args = CloudLink.methodArguments('digitalocean', 'getInstanceStatus');
         assert.strictEqual(args instanceof Object, true, 'args is not an object');
         assert.strictEqual('instanceId' in args, true, 'instanceId not found in args');
         assert.strictEqual(typeof(args.instanceId), 'object', 'args type is not an object');

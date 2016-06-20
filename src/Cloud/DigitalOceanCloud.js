@@ -142,6 +142,7 @@ exports = module.exports = (namespace) => {
                                 data.droplets
                                     .forEach((droplet) => {
                                         if (hasIdsFilter) {
+
                                             /**
                                              * @type {DigitalOceanInstance}
                                              */
