@@ -35,6 +35,9 @@ exports = module.exports = (namespace) => {
                         'object'
                     ]
                 },
+                listInstances: {
+                    'ids': 'object'
+                },
                 listDistributions: {
                     'filters': 'object'
                 },
@@ -69,9 +72,10 @@ exports = module.exports = (namespace) => {
         // noinspection JSUnusedGlobalSymbols
         /**
          * Abstraction: Returns a promise with a list of instances
+         * @param ids
          * @returns {Promise}
          */
-        listInstances() {
+        listInstances({ids = []} = {}) {
             throw new CloudMethodNotImplementedError(
                 'listInstances is not implemented'
             );

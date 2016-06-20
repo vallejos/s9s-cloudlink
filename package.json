@@ -1,6 +1,6 @@
 {
   "name": "s9s-cloudlink",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "src/CloudLink.js",
   "license": "MIT",
   "author": {

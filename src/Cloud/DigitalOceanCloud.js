@@ -116,8 +116,9 @@ exports = module.exports = (namespace) => {
         /**
          * @inheritdoc
          */
-        listInstances() {
+        listInstances({ids = []} = {}) {
             return new Promise((resolve, reject) => {
+                const hasIdsFilter = ids.length > 0;
                 // noinspection JSCheckFunctionSignatures
                 this.api
                     .dropletsGetAll(
@@ -140,7 +141,17 @@ exports = module.exports = (namespace) => {
                                 const list = new InstanceList();
                                 data.droplets
                                     .forEach((droplet) => {
-                                        list.push(new DigitalOceanInstance(droplet));
+                                        if (hasIdsFilter) {
+                                            /**
+                                             * @type {DigitalOceanInstance}
+                                             */
+                                            const instance = new DigitalOceanInstance(droplet);
+                                            if (ids.indexOf(instance.getId()) !== -1) {
+                                                list.push(instance);
+                                            }
+                                        } else {
+                                            list.push(new DigitalOceanInstance(droplet));
+                                        }
                                     });
                                 resolve(list);
                             } else {

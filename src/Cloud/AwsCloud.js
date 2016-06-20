@@ -150,11 +150,17 @@ exports = module.exports = (namespace) => {
         /**
          * @inheritdoc
          */
-        listInstances() {
+        listInstances({ids = []} = {}) {
+            const requestFilters = {};
             const list = new InstanceList();
+
+            if (ids.length > 0) {
+                requestFilters.InstanceIds = ids;
+            }
+
             const promise = new Promise((resolve, reject) => {
                 this.api
-                    .describeInstances((error, data) => {
+                    .describeInstances(requestFilters, (error, data) => {
                         if (error) {
                             reject(error);
                         } else {
