@@ -491,6 +491,24 @@ exports = module.exports = (namespace) => {
             });
         }
 
+        /**
+         * @inheritdoc
+         */
+        listSubNets({filters = {}, ids = []} = {}) {
+            return new Promise((resolve, reject) => {
+                reject('listSubNets is not supported for DigitalOcean');
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        addSubNet({cidr = null, tenancy = 'default'} = {}) {
+            return new Promise((resolve, reject) => {
+                reject('addSubNet is not supported for DigitalOcean');
+            });
+        }
+
     }
 
     return DigitalOceanCloud;

@@ -103,13 +103,33 @@ exports = module.exports = (namespace) => {
                             reject(error);
                         } else {
                             const list = new InstanceList();
+                            const promises = [];
                             (data.Instances || [])
-                                .forEach((instance) => {
+                                .forEach((instance, index) => {
+                                    promises.push(
+                                        this.createTags({
+                                            resources: [instance],
+                                            tags: [
+                                                {
+                                                    Key: 'Name',
+                                                    Value: names[index]
+                                                }
+                                            ]
+                                        })
+                                    );
                                     list.push(
                                         new AwsInstance(instance)
                                     );
                                 });
-                            resolve(list);
+
+                            Promise
+                                .all(promises)
+                                .then(() => {
+                                    resolve(list);
+                                })
+                                .catch(() => {
+                                    resolve(list);
+                                });
                         }
                     });
             });

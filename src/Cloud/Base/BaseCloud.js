@@ -70,6 +70,10 @@ exports = module.exports = (namespace) => {
                 addVpc: {
                     'cidr': 'string',
                     'tenancy': 'string'
+                },
+                listSubNets: {
+                    'filters': 'object',
+                    'ids': 'object'
                 }
             };
             return args[method] || null;
