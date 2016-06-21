@@ -56,6 +56,8 @@ exports = module.exports = (namespace) => {
             region = null,
             size = null,
             image = null,
+            disk = null,
+            subnet = null,
             sshKeys = null
         } = {}) {
             return new Promise((resolve, reject) => {

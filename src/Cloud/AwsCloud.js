@@ -60,73 +60,58 @@ exports = module.exports = (namespace) => {
             names = null,
             region = null,
             size = null,
+            disk = 8,
             image = null,
+            subnet = null,
             sshKeys = null
         } = {}) {
             return new Promise((resolve, reject) => {
-
-                this
-                    .addVpc({
-                        cidr: '10.0.0.0/16'
-                    })
-                    .then((vpc) => {
-                        return this
-                            .addSubNet({
-                                cidr: '10.0.0.0/16',
-                                vpcId: vpc.id
-                            });
-                    })
-                    .then((subnet) => {
-
-                        const params = {
-                            ImageId: image,
-                            InstanceType: size,
-                            MinCount: 1,
-                            MaxCount: names.length,
-                            KeyName: sshKeys[0],
-                            Monitoring: {
-                                Enabled: false
-                            },
-                            InstanceInitiatedShutdownBehavior: 'stop',
-                            DisableApiTermination: false,
-                            BlockDeviceMappings: [
-                                {
-                                    DeviceName: '/dev/sdh',
-                                    Ebs: {
-                                        DeleteOnTermination: true,
-                                        Encrypted: true,
-                                        VolumeSize: 8,
-                                        VolumeType: 'standard'
-                                    }
-                                }
-                            ],
-                            NetworkInterfaces: [
-                                {
-                                    DeviceIndex: 0,
-                                    AssociatePublicIpAddress: true,
-                                    DeleteOnTermination: true,
-                                    SubnetId: subnet.id
-                                }
-                            ]
-                        };
-                        this.api
-                            .runInstances(params, (error, data) => {
-                                if (error) {
-                                    reject(error);
-                                } else {
-                                    const list = new InstanceList();
-                                    (data.Instances || [])
-                                        .forEach((instance) => {
-                                            list.push(
-                                                new AwsInstance(instance)
-                                            );
-                                        });
-                                    resolve(list);
-                                }
-                            });
-
-                    })
-                    .catch(reject);
+                const params = {
+                    ImageId: image,
+                    InstanceType: size,
+                    MinCount: 1,
+                    MaxCount: names.length,
+                    KeyName: sshKeys[0],
+                    Monitoring: {
+                        Enabled: false
+                    },
+                    InstanceInitiatedShutdownBehavior: 'stop',
+                    DisableApiTermination: false,
+                    BlockDeviceMappings: [
+                        {
+                            DeviceName: '/dev/sdh',
+                            Ebs: {
+                                DeleteOnTermination: true,
+                                Encrypted: true,
+                                VolumeSize: disk,
+                                VolumeType: 'standard'
+                            }
+                        }
+                    ],
+                    NetworkInterfaces: [
+                        {
+                            DeviceIndex: 0,
+                            AssociatePublicIpAddress: true,
+                            DeleteOnTermination: true,
+                            SubnetId: subnet
+                        }
+                    ]
+                };
+                this.api
+                    .runInstances(params, (error, data) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            const list = new InstanceList();
+                            (data.Instances || [])
+                                .forEach((instance) => {
+                                    list.push(
+                                        new AwsInstance(instance)
+                                    );
+                                });
+                            resolve(list);
+                        }
+                    });
             });
         }
 

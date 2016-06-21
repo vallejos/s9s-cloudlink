@@ -30,6 +30,12 @@ exports = module.exports = (namespace) => {
                     'region': 'string',
                     'size': 'string',
                     'image': 'string',
+                    'disk': 'number',
+                    'subnet': [
+                        'string',
+                        'number',
+                        'object' // required for null
+                    ],
                     'sshKeys': [
                         'string',
                         'object'

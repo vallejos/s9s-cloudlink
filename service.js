@@ -24,4 +24,4 @@ app.requireFolder('controllers/errors');
 /**
  * Start listening (use env.PORT or 3000 as default)
  */
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3001);
