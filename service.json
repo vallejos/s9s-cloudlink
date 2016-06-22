@@ -1,0 +1,20 @@
+{
+  "apps": [
+    {
+      "name": "service",
+      "script": "service.js",
+      "watch": true,
+      "merge_logs": true,
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 80
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      },
+      "env_staging": {
+        "NODE_ENV": "staging"
+      }
+    }
+  ]
+}

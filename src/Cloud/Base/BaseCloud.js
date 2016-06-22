@@ -74,6 +74,20 @@ exports = module.exports = (namespace) => {
                 listSubNets: {
                     'filters': 'object',
                     'ids': 'object'
+                },
+                addNetworkAcl: {
+                    'vpcId': [
+                        'string',
+                        'number'
+                    ],
+                    'entries': 'object'
+                },
+                addNetworkAclEntry: {
+                    'aclId': [
+                        'string',
+                        'number'
+                    ],
+                    'entries': 'object'
                 }
             };
             return args[method] || null;
@@ -245,6 +259,30 @@ exports = module.exports = (namespace) => {
         addSubNet({cidr = null, vpcId = null} = {}) {
             throw new CloudMethodNotImplementedError(
                 'addSubNet is not implemented'
+            );
+        }
+
+        //noinspection JSMethodCanBeStatic
+        /**
+         * Abstraction: Returns a promise with the result of addNetworkAcl operation
+         * @param {string} vpcId
+         * @param {Array} entries
+         */
+        addNetworkAcl({vpcId = null, entries = []}) {
+            throw new CloudMethodNotImplementedError(
+                'addNetworkAcl is not implemented'
+            );
+        }
+
+        //noinspection JSMethodCanBeStatic
+        /**
+         * Abstraction: Returns a promise with the result of addNetworkAcl operation
+         * @param {string} aclId
+         * @param {number} entries
+         */
+        addNetworkAclEntry({aclId = null, entries = []}) {
+            throw new CloudMethodNotImplementedError(
+                'addNetworkAclEntry is not implemented'
             );
         }
 

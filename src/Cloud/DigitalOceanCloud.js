@@ -509,6 +509,24 @@ exports = module.exports = (namespace) => {
             });
         }
 
+        /**
+         * @inheritdoc
+         */
+        addNetworkAcl({vpcId = null, entries = []}) {
+            return new Promise((resolve, reject) => {
+                reject('addNetworkAcl is not supported for DigitalOcean');
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        addNetworkAclEntry({aclId = null, entries = []}) {
+            return new Promise((resolve, reject) => {
+                reject('addNetworkAclEntry is not supported for DigitalOcean');
+            });
+        }
+
     }
 
     return DigitalOceanCloud;

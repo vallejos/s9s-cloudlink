@@ -597,6 +597,34 @@ exports = module.exports = (namespace) => {
             });
         }
 
+        /**
+         * @inheritdoc
+         */
+        addNetworkAcl({vpcId = null, entries = []}) {
+            return new Promise((resolve, reject) => {
+                this.api
+                    .createNetworkAcl(
+                        {
+                            VpcId: vpcId
+                        },
+                        (error, data) => {
+                            if (error) {
+                                reject(error);
+                            } else {
+                                resolve(data);
+                            }
+                        }
+                    )
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        addNetworkAclEntry({aclId = null, entries = []}) {
+            // todo: finish
+        }
+
         // noinspection JSUnusedGlobalSymbols
         /**
          * Creates tags for resources
