@@ -118,6 +118,33 @@ exports = module.exports = (namespace) => {
         /**
          * @inheritdoc
          */
+        deleteInstance({
+            ids = null
+        } = {}) {
+            return new Promise((resolve, reject) => {
+                const promises = [];
+                ids.forEach((id) => {
+                    promises.push(new Promise((resolve, reject) => {
+                        this.api
+                            .dropletsDelete(id, (error) => {
+                                if (error) {
+                                    reject(error);
+                                } else {
+                                    resolve();
+                                }
+                            })
+                    }));
+                });
+                Promise
+                    .all(promises)
+                    .then(resolve)
+                    .catch(reject);
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
         listInstances({ids = []} = {}) {
             return new Promise((resolve, reject) => {
                 const hasIdsFilter = ids.length > 0;

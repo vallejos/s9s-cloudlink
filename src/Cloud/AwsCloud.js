@@ -35,7 +35,8 @@ exports = module.exports = (namespace) => {
      *  createSubnet:function,
      *  createTags:function,
      *  describeVpcs:function,
-     *  describeSubnets:function
+     *  describeSubnets:function,
+     *  terminateInstances:function
      * }} api
      */
     class AwsCloud extends BaseCloud {
@@ -130,6 +131,27 @@ exports = module.exports = (namespace) => {
                                 .catch(() => {
                                     resolve(list);
                                 });
+                        }
+                    });
+            });
+        }
+
+        /**
+         * @inheritdoc
+         */
+        deleteInstance({
+            ids = null
+        } = {}) {
+            return new Promise((resolve, reject) => {
+                const params = {
+                    InstanceIds: ids
+                };
+                this.api
+                    .terminateInstances(params, (error) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve();
                         }
                     });
             });

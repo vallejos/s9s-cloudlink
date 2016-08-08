@@ -44,6 +44,9 @@ exports = module.exports = (namespace) => {
                 listInstances: {
                     'ids': 'object'
                 },
+                deleteInstance: {
+                    'ids': 'object'
+                },
                 listDistributions: {
                     'filters': 'object'
                 },
@@ -115,6 +118,18 @@ exports = module.exports = (namespace) => {
         addInstance({params:params = {}} = {}) {
             throw new CloudMethodNotImplementedError(
                 'addInstance is not implemented'
+            );
+        }
+
+        /**
+         * Abstraction: Deletes an instance from cloud
+         * @param params
+         * @returns {Promise}
+         * @abstract
+         */
+        deleteInstance({params:params = {}} = {}) {
+            throw new CloudMethodNotImplementedError(
+                'deleteInstance is not implemented'
             );
         }
 
